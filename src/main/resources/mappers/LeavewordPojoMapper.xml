@@ -25,7 +25,7 @@
     insert into bsleaveword (id, active, passive, 
       leaveword, cretime)
     values (#{id,jdbcType=BIGINT}, #{active,jdbcType=VARCHAR}, #{passive,jdbcType=VARCHAR}, 
-      #{leaveword,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP})
+      #{leaveword,jdbcType=VARCHAR}, now())
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.LeavewordPojo" >
     insert into bsleaveword
@@ -60,7 +60,7 @@
         #{leaveword,jdbcType=VARCHAR},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>

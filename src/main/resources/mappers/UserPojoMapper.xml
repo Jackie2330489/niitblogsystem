@@ -32,7 +32,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{intro,jdbcType=VARCHAR}, #{payqd,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP}
+      #{intro,jdbcType=VARCHAR}, #{payqd,jdbcType=VARCHAR}, now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.UserPojo" >
@@ -92,7 +92,7 @@
         #{payqd,jdbcType=VARCHAR},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>

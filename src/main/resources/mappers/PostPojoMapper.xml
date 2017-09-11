@@ -29,7 +29,7 @@
       body, cretime, updtime, 
       status, readtimes)
     values (#{id,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{body,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP}, #{updtime,jdbcType=TIMESTAMP}, 
+      #{body,jdbcType=VARCHAR}, now(), now(),
       #{status,jdbcType=INTEGER}, #{readtimes,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.PostPojo" >
@@ -74,10 +74,10 @@
         #{body,jdbcType=VARCHAR},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updtime != null" >
-        #{updtime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -103,7 +103,7 @@
         cretime = #{cretime,jdbcType=TIMESTAMP},
       </if>
       <if test="updtime != null" >
-        updtime = #{updtime,jdbcType=TIMESTAMP},
+        updtime = now(),
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -120,7 +120,7 @@
       title = #{title,jdbcType=VARCHAR},
       body = #{body,jdbcType=VARCHAR},
       cretime = #{cretime,jdbcType=TIMESTAMP},
-      updtime = #{updtime,jdbcType=TIMESTAMP},
+      updtime = now(),
       status = #{status,jdbcType=INTEGER},
       readtimes = #{readtimes,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}

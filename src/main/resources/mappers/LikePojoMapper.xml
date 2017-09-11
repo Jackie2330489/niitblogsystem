@@ -25,7 +25,7 @@
     insert into bslike (id, active, passive, 
       postid, cretime)
     values (#{id,jdbcType=BIGINT}, #{active,jdbcType=VARCHAR}, #{passive,jdbcType=VARCHAR}, 
-      #{postid,jdbcType=BIGINT}, #{cretime,jdbcType=TIMESTAMP})
+      #{postid,jdbcType=BIGINT}, now())
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.LikePojo" >
     insert into bslike
@@ -60,7 +60,7 @@
         #{postid,jdbcType=BIGINT},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>

@@ -24,7 +24,7 @@
     insert into bsmessage (id, msgtype, status, 
       cretime)
     values (#{id,jdbcType=BIGINT}, #{msgtype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{cretime,jdbcType=TIMESTAMP})
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.MessagePojo" >
     insert into bsmessage
@@ -53,7 +53,7 @@
         #{status,jdbcType=INTEGER},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>

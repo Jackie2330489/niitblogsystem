@@ -27,7 +27,7 @@
       passive, comment, cretime
       )
     values (#{id,jdbcType=BIGINT}, #{postid,jdbcType=BIGINT}, #{active,jdbcType=VARCHAR}, 
-      #{passive,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP}
+      #{passive,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.CommentPojo" >
@@ -69,7 +69,7 @@
         #{comment,jdbcType=VARCHAR},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>

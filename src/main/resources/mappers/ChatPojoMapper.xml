@@ -25,7 +25,7 @@
     insert into bschat (id, active, passive, 
       msg, cretime)
     values (#{id,jdbcType=BIGINT}, #{active,jdbcType=VARCHAR}, #{passive,jdbcType=VARCHAR}, 
-      #{msg,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP})
+      #{msg,jdbcType=VARCHAR}, now())
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.ChatPojo" >
     insert into bschat
@@ -60,7 +60,7 @@
         #{msg,jdbcType=VARCHAR},
       </if>
       <if test="cretime != null" >
-        #{cretime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
