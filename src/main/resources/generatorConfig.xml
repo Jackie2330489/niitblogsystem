@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <properties resource="datasource.properties"></properties>
+
+    <classPathEntry location="${db.driverLocation}"/>    <!--jdbc驱动jar包位置-->
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <commentGenerator>            <!--注释-->
+            <property name="suppressAllComments" value="true"/>       <!--是否取消注释-->
+            <property name="suppressDate" value="true"/>            <!--是否取消生成注释代时间戳-->
+        </commentGenerator>
+        
+        <jdbcConnection driverClass="${db.driverClassName}"
+                        connectionURL="${db.url}"
+                        userId="${db.username}"
+                        password="${db.password}">
+        </jdbcConnection>        <!--jdbc连接-->
+        
+        <javaTypeResolver>            <!--类型自动转化器-->
+            <property name="forceBigDecimals" value="false"/>            <!--是否强制转化 数据库类型转java类型-->
+        </javaTypeResolver>
+
+        <!--Model生成器-->
+        <javaModelGenerator targetPackage="com.niitblogsystem.pojo" targetProject="./src/main/java">    <!--targetPackage指生成Model的包名 targetProject指路径  连接为完整pojo包的路径-->
+            <property name="enableSubPackages" value="false"/>            <!--是否再添加一层schema false:com.niitblogsystem.pojo true:com.niitblogsystem.pojo.[schemaName]-->
+            <property name="constructBased" value="true"/>            <!--是否生成构造函数-->
+            <property name="trimStrings" value="true"/>            <!--对String类是否使用trim方法   即去除前后空格-->
+            <property name="immutable" value="false"/>            <!--是否不可改变   即没有setter方法，执行构造方法后就不能再改变值-->
+        </javaModelGenerator>
+
+        <!--mybatis mapper映射文件生成目录-->
+        <sqlMapGenerator targetPackage="mappers" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--dao层生成位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.niitblogsystem.dao" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--后面enable*ByExample是否生成example类-->
+        <table tableName="bsuser" domainObjectName="UserPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bspost" domainObjectName="PostPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <columnOverride column="body" jdbcType="VARCHAR"/>
+        </table>
+        <table tableName="bstag" domainObjectName="TagPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bsmessage" domainObjectName="MessagePojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bsfollow" domainObjectName="FollowPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bsleaveword" domainObjectName="LeavewordPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bslike" domainObjectName="LikePojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bschat" domainObjectName="ChatPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <columnOverride column="msg" jdbcType="VARCHAR"/>
+        </table>
+        <table tableName="bscomment" domainObjectName="CommentPojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+        <table tableName="bssensitive" domainObjectName="SensitivePojo" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"></table>
+    </context>
+
+</generatorConfiguration>

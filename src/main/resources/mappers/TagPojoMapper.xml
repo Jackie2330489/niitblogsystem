@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niitblogsystem.dao.TagPojoMapper" >
+  <resultMap id="BaseResultMap" type="com.niitblogsystem.pojo.TagPojo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tagname" property="tagname" jdbcType="VARCHAR" />
+    <result column="posts" property="posts" jdbcType="INTEGER" />
+    <result column="cretime" property="cretime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tagname, posts, cretime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bstag
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bstag
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.niitblogsystem.pojo.TagPojo" >
+    insert into bstag (id, tagname, posts, 
+      cretime)
+    values (#{id,jdbcType=BIGINT}, #{tagname,jdbcType=VARCHAR}, #{posts,jdbcType=INTEGER}, 
+      #{cretime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.TagPojo" >
+    insert into bstag
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tagname != null" >
+        tagname,
+      </if>
+      <if test="posts != null" >
+        posts,
+      </if>
+      <if test="cretime != null" >
+        cretime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tagname != null" >
+        #{tagname,jdbcType=VARCHAR},
+      </if>
+      <if test="posts != null" >
+        #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="cretime != null" >
+        #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niitblogsystem.pojo.TagPojo" >
+    update bstag
+    <set >
+      <if test="tagname != null" >
+        tagname = #{tagname,jdbcType=VARCHAR},
+      </if>
+      <if test="posts != null" >
+        posts = #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="cretime != null" >
+        cretime = #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niitblogsystem.pojo.TagPojo" >
+    update bstag
+    set tagname = #{tagname,jdbcType=VARCHAR},
+      posts = #{posts,jdbcType=INTEGER},
+      cretime = #{cretime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

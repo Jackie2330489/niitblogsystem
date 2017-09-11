@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niitblogsystem.dao.FollowPojoMapper" >
+  <resultMap id="BaseResultMap" type="com.niitblogsystem.pojo.FollowPojo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+    <result column="passive" property="passive" jdbcType="VARCHAR" />
+    <result column="cretime" property="cretime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, active, passive, cretime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bsfollow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bsfollow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.niitblogsystem.pojo.FollowPojo" >
+    insert into bsfollow (id, active, passive, 
+      cretime)
+    values (#{id,jdbcType=BIGINT}, #{active,jdbcType=VARCHAR}, #{passive,jdbcType=VARCHAR}, 
+      #{cretime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.FollowPojo" >
+    insert into bsfollow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="active != null" >
+        active,
+      </if>
+      <if test="passive != null" >
+        passive,
+      </if>
+      <if test="cretime != null" >
+        cretime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="active != null" >
+        #{active,jdbcType=VARCHAR},
+      </if>
+      <if test="passive != null" >
+        #{passive,jdbcType=VARCHAR},
+      </if>
+      <if test="cretime != null" >
+        #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niitblogsystem.pojo.FollowPojo" >
+    update bsfollow
+    <set >
+      <if test="active != null" >
+        active = #{active,jdbcType=VARCHAR},
+      </if>
+      <if test="passive != null" >
+        passive = #{passive,jdbcType=VARCHAR},
+      </if>
+      <if test="cretime != null" >
+        cretime = #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niitblogsystem.pojo.FollowPojo" >
+    update bsfollow
+    set active = #{active,jdbcType=VARCHAR},
+      passive = #{passive,jdbcType=VARCHAR},
+      cretime = #{cretime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

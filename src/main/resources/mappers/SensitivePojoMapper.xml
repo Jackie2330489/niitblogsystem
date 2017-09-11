@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.niitblogsystem.dao.SensitivePojoMapper" >
+  <resultMap id="BaseResultMap" type="com.niitblogsystem.pojo.SensitivePojo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="word" property="word" jdbcType="VARCHAR" />
+    <result column="cretime" property="cretime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, word, cretime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bssensitive
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bssensitive
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.niitblogsystem.pojo.SensitivePojo" >
+    insert into bssensitive (id, word, cretime
+      )
+    values (#{id,jdbcType=BIGINT}, #{word,jdbcType=VARCHAR}, #{cretime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.SensitivePojo" >
+    insert into bssensitive
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="word != null" >
+        word,
+      </if>
+      <if test="cretime != null" >
+        cretime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="word != null" >
+        #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="cretime != null" >
+        #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.niitblogsystem.pojo.SensitivePojo" >
+    update bssensitive
+    <set >
+      <if test="word != null" >
+        word = #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="cretime != null" >
+        cretime = #{cretime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.niitblogsystem.pojo.SensitivePojo" >
+    update bssensitive
+    set word = #{word,jdbcType=VARCHAR},
+      cretime = #{cretime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
