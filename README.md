@@ -1,5 +1,5 @@
 ##Niit Blog System
 
-![](/pic/database.jpg)
+![](pic/database.jpg)
 
 
