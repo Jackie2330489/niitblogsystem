@@ -8,6 +8,7 @@
   <name>niitblogsystem Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <!--配置编码和记录主要的版本号-->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
