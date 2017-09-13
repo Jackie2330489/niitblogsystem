@@ -63,13 +63,17 @@
 
 3. 更新博文 #post
 
-/post/update (request:PostPojo)
+/post/update (request:title,body,status,tags)
 
-4. 查看博文 #get
+4. 修改博文状态   #post
+
+/post/update_status (request:id,status)
+
+5. 查看博文 #get
 
 /post/view/?
 
-5. 查看博文列表   #get
+6. 查看博文列表   #get
 
 /post/list  (request:author,pageNum,pageSize,orderBy)
 #####评论
@@ -85,14 +89,17 @@
 
 /comment/list   (request:postid,pageNum,pageSize)
 
+4. 查看个人评论 #get
+
+/comment/inmypost   (request:pageNum,pageSize)
 #####留言
 1. 留言   #post
 
-/leaveword/create   (request:active,passive,leaveword)
+/leaveword/create   (request:passive,leaveword)
 
-2. 查看留言 #post
+2. 查看个人留言墙 #get
 
-/leaveword/view/?
+/leaveword/wall
     
 3. 删除留言 #post
 
@@ -100,19 +107,19 @@
 #####私信
 1. 发私信  #post
 
-/chat/send  (request:active,passive,msg)
+/chat/send  (request:passive,msg)
 
 2. 查看私信 #post
 
-/char/list  (request:active,passive,pageNum,pageSize)
+/char/list  (request:passive,pageNum,pageSize)
 #####点赞
 1. 点赞   #post
 
-/post/create_like  (request:active,passive,postid)
+/like/create  (request:passive,postid)
 
 2. 查看点赞  #get
 
-/post/list_like (request:passive,postid,pageNum,pageSize)
+/like/list (request:pageNum,pageSize)
 #####个人信息
 1. 查看别人信息   #get
 
