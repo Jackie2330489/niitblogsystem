@@ -110,7 +110,7 @@ CREATE TABLE bsfollow(
 #消息表
 CREATE TABLE bsmessage(
 	id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
-	msgtype INT NOT NULL COMMENT '类型 1评论 2留言 3私信 4点赞',
+	msgtype INT NOT NULL COMMENT '类型 1评论 2留言 3私信 4点赞 5系统',
 	status INT NOT NULL DEFAULT 0 COMMENT '状态 0-未读 1-已读',
 	cretime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	PRIMARY KEY(id),
