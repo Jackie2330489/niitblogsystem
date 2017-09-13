@@ -14,6 +14,7 @@
 ####用户模块
 * 注册
 * 登录
+* 验证
 * 博文
 * 评论
 * 留言
@@ -28,19 +29,7 @@
 * 敏感信息管理
 ####用户接口
 #####注册
-1. 检查用户名是否有效或已存在 #get
-
-/user/check_valid  (request:str,type)
-
-2. 发邮箱验证码   #post
-
-/user/send_email_vericode  (request:email)
-
-3. 校验验证码    #post
-
-/user/veri_email_vericode  (request:vericode)
-
-4. 注册用户 #post
+1. 注册用户 #post
 
 /user/register (request:UserPojo)
 #####登录
@@ -51,6 +40,18 @@
 2. 登出 #get
 
 /user/logout
+#####验证
+1. 检查用户名或邮箱是否有效或已存在 #get
+
+/user/check_valid  (request:str,type)
+
+2. 发邮箱验证码   #post
+
+/user/send_email_vericode  (request:email)
+
+3. 校验验证码    #post
+
+/user/veri_email_vericode  (request:vericode)
 #####博文
 1. 发表博文 #post
 
@@ -66,7 +67,7 @@
 
 4. 查看博文 #get
 
-/post/?
+/post/view/?
 
 5. 查看博文列表   #get
 
@@ -91,7 +92,7 @@
 
 2. 查看留言 #post
 
-/leaveword/?
+/leaveword/view/?
     
 3. 删除留言 #post
 
@@ -113,17 +114,21 @@
 
 /post/list_like (request:passive,postid,pageNum,pageSize)
 #####个人信息
-1. 查看个人信息   #post
+1. 查看别人信息   #get
 
-/user/?
+/user/view/?
 
-2. 修改个人信息   #post
+2. 查看个人信息   #get
 
-/user/?/update  (request:UserPojo)
+/user/view_myself
 
-3. 重置密码 #post
+3. 修改个人信息   #post
 
-/user/?/reset_password  (request:password)
+/user/update  (request:UserPojo)
+
+4. 重置密码 #post
+
+/user/reset_password  (request:password)
 #####用户管理
 1. 添加用户     #post
 

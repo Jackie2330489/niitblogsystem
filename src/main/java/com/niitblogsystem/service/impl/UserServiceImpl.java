@@ -5,10 +5,13 @@ import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.dao.UserPojoMapper;
 import com.niitblogsystem.pojo.UserPojo;
 import com.niitblogsystem.service.IUserService;
+import com.niitblogsystem.util.EmailHelper;
 import com.niitblogsystem.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
 
 /**
  * Created by Justin on 2017/9/12.
@@ -87,6 +90,26 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("参数错误");
         }
         return ServerResponse.createBySuccessMessage("校验成功");
+    }
+
+    @Override
+    public ServerResponse<String> sendEmailVericode(String email) {
+        //初始化code
+        int code=0;
+        try {
+            //使用发送邮件的工具类 发送验证码
+            code= EmailHelper.sendEmailVerCode(email);
+        } catch (MessagingException e) {
+            //若抛出异常 返回
+            return ServerResponse.createByErrorMessage("无法发送验证码");
+        }
+        if(code==0){
+            //若code仍是0 返回
+            return ServerResponse.createByErrorMessage("发送验证码失败");
+        }
+        //返回成功
+        String vericode=MD5Util.MD5EncodeUtf8(Integer.toString(code));
+        return ServerResponse.createBySuccess("发送成功",vericode);
     }
 
 }

@@ -1,8 +1,6 @@
 package com.niitblogsystem.controller.manager;
 
 import com.niitblogsystem.common.ServerResponse;
-import com.niitblogsystem.pojo.UserPojo;
-import com.niitblogsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,36 +8,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by Justin on 2017/9/12.
+ * Created by Justin on 2017/9/13.
  */
 @Controller
-@RequestMapping("/manage/user")
-public class UserManagerController {
+@RequestMapping("/manage/sensitive")
+public class SensitiveManagerController {
 
-    @Autowired
-    private IUserService iUserService;
+//    @Autowired
 
-    ////用户管理模块
-    //添加用户
-    @RequestMapping(value="/add",method= RequestMethod.POST)
+    ////敏感信息管理
+    //添加敏感信息
+    @RequestMapping(value="/create",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> addUser(UserPojo userPojo){
+    public ServerResponse<String> addSensitive(String word){
         //todo
         return null;
     }
-    //删除用户
+    //删除敏感信息
     @RequestMapping(value="/del",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> delUser(long id){
+    public ServerResponse<String> delSensitive(long id){
         //todo
         return null;
     }
-    //查看用户列表
+    //查看敏感信息表
     @RequestMapping(value="/list",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> listUser(String fuzzy,int pageNum,int pageSize,String orderBy){
+    public ServerResponse<String> listSensitive(int pageNum,int pageSize){
         //todo
         return null;
     }
-
 }

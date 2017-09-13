@@ -13,4 +13,6 @@ public interface IUserService {
     ServerResponse<String> register(UserPojo userPojo);
 
     ServerResponse<String> checkValid(String str,String type);
+
+    ServerResponse<String> sendEmailVericode(String email);
 }
