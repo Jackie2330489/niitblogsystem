@@ -90,4 +90,13 @@
       cretime = #{cretime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <delete id="deleteByIdAndUsername" parameterType="map">
+    delete from bsleaveword
+    where id=#{id} and active=#{username}
+  </delete>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from bsleaveword where passive=#{username}
+  </select>
 </mapper>

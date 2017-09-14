@@ -116,6 +116,19 @@
 
 /leaveword/del  (request:id)
 
+#####关注
+1. 关注 #post
+
+/follow/create  (request:passive)
+
+2. 取消关注 #post
+
+/follow/disfollow   (request:passive)
+
+3. 关注列表  #get
+
+/follow/list    (request:username)
+
 #####私信
 1. 发私信  #post
 

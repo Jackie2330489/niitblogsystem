@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.niitblogsystem.common.Const;
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.pojo.UserPojo;
-import com.niitblogsystem.service.ILeavewordService;
+import com.niitblogsystem.service.IFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Justin on 2017/9/13.
+ * Created by Justin on 2017/9/14.
  */
 @Controller
-@RequestMapping("/leaveword")
-public class LeavewordController {
+@RequestMapping("/follow")
+public class FollowController {
 
     @Autowired
-    private ILeavewordService iLeavewordService;
+    private IFollowService iFollowService;
 
-    ////留言模块
-    //发表留言
+    ////关注模块
+    //关注
     @RequestMapping(value="/create",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> createLeaveword(String passive,String leaveword,HttpSession session){
+    public ServerResponse<String> createFollow(String passive, HttpSession session){
         //验证登录状态
         UserPojo userPojo= (UserPojo) session.getAttribute(Const.CURRENT_USER);
         if(userPojo==null){
@@ -35,18 +35,12 @@ public class LeavewordController {
         }
         //获取当前用户名
         String active=userPojo.getUsername();
-        return iLeavewordService.createLeaveword(active,passive,leaveword);
+        return iFollowService.createFollow(active,passive);
     }
-    //查看留言墙
-    @RequestMapping(value="/wall",method= RequestMethod.GET)
+    //取消关注
+    @RequestMapping(value="/disfollow",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<PageInfo> viewLeaveword(String username,int pageNum,int pageSize){
-        return iLeavewordService.wallLeaveword(username,pageNum,pageSize);
-    }
-    //删除留言
-    @RequestMapping(value="/del",method= RequestMethod.POST)
-    @ResponseBody
-    public ServerResponse<String> delLeaveword(long id,HttpSession session){
+    public ServerResponse<String> delFollow(String passive, HttpSession session){
         //验证登录状态
         UserPojo userPojo= (UserPojo) session.getAttribute(Const.CURRENT_USER);
         if(userPojo==null){
@@ -54,6 +48,12 @@ public class LeavewordController {
         }
         //获取当前用户名
         String active=userPojo.getUsername();
-        return iLeavewordService.delLeaveword(active,id);
+        return iFollowService.delFollow(active,passive);
+    }
+    //查看关注列表
+    @RequestMapping(value="/list",method= RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<PageInfo> listFollow(String username,int pageNum,int pageSize){
+        return iFollowService.listFollow(username,pageNum,pageSize);
     }
 }

@@ -1,6 +1,9 @@
 package com.niitblogsystem.dao;
 
 import com.niitblogsystem.pojo.FollowPojo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface FollowPojoMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,8 @@ public interface FollowPojoMapper {
     int updateByPrimaryKeySelective(FollowPojo record);
 
     int updateByPrimaryKey(FollowPojo record);
+
+    int deleteByActivePassive(@Param("active") String active,@Param("passive") String passive);
+
+    List<FollowPojo> selectList(String username);
 }
