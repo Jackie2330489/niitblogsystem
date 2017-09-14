@@ -156,4 +156,25 @@
     select count(1) from bsuser
     where email=#{email}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List"/>
+    from bsuser
+    <if test="fuzzy != null and fuzzy != ''">
+      where username like #{fuzzy} or email like #{fuzzy}
+    </if>
+  </select>
+
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List"/>
+    from bsuser where username=#{username}
+  </select>
+
+  <update id="resetPassword" parameterType="map">
+    update bsuser
+    set password=#{password}
+    where id=#{id}
+  </update>
 </mapper>

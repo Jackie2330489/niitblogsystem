@@ -2,6 +2,7 @@ package com.niitblogsystem.controller.manager;
 
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.pojo.UserPojo;
+import com.niitblogsystem.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/manage/post")
 public class PostManagerController {
 
-//    @Autowired
+    @Autowired
+    private IPostService iPostService;
 
     ////博文管理模块
     //添加管理员博文

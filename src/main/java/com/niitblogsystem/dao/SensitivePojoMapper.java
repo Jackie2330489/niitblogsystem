@@ -2,6 +2,8 @@ package com.niitblogsystem.dao;
 
 import com.niitblogsystem.pojo.SensitivePojo;
 
+import java.util.List;
+
 public interface SensitivePojoMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface SensitivePojoMapper {
     int updateByPrimaryKeySelective(SensitivePojo record);
 
     int updateByPrimaryKey(SensitivePojo record);
+
+    List<SensitivePojo> selectList();
 }

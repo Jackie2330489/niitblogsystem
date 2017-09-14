@@ -1,6 +1,9 @@
 package com.niitblogsystem.dao;
 
 import com.niitblogsystem.pojo.ChatPojo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ChatPojoMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface ChatPojoMapper {
     int updateByPrimaryKeySelective(ChatPojo record);
 
     int updateByPrimaryKey(ChatPojo record);
+
+    List<ChatPojo> selectList(@Param("active") String active,@Param("passive") String passive);
 }

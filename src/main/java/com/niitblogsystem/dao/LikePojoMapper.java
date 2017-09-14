@@ -2,6 +2,8 @@ package com.niitblogsystem.dao;
 
 import com.niitblogsystem.pojo.LikePojo;
 
+import java.util.List;
+
 public interface LikePojoMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface LikePojoMapper {
     int updateByPrimaryKeySelective(LikePojo record);
 
     int updateByPrimaryKey(LikePojo record);
+
+    List<LikePojo> selectList(String username);
 }

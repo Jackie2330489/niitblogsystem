@@ -59,9 +59,9 @@ public class UserController {
     //校验验证码
     @RequestMapping(value="/veri_email_vericode",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> veriEmailVericode(int vericode,HttpSession session){
-        //验证码int转String
-        String md5veri=Integer.toString(vericode);
+    public ServerResponse<String> veriEmailVericode(Integer vericode,HttpSession session){
+        //验证码Integer转String
+        String md5veri=vericode.toString();
         //获取session的vericode
         String realmd5veri= (String) session.getAttribute(Const.VERICODE);
         //校验验证码
@@ -98,8 +98,7 @@ public class UserController {
     @RequestMapping(value="/view/{username}",method= RequestMethod.GET)
     @ResponseBody
     public ServerResponse<UserPojo> viewInfo(@PathVariable String username){
-        //todo
-        return null;
+        return iUserService.viewInfo(username);
     }
     //查看个人信息
     @RequestMapping(value="/view_myself",method= RequestMethod.GET)
@@ -117,15 +116,30 @@ public class UserController {
     //修改个人信息
     @RequestMapping(value="/update",method= RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> updateInfo(UserPojo userPojo){
-        //todo
-        return null;
+    public ServerResponse<String> updateInfo(UserPojo userPojo,HttpSession session){
+        //把userPojo的password置空
+        userPojo.setPassword(null);
+        UserPojo currentUser= (UserPojo) session.getAttribute(Const.CURRENT_USER);
+        if(userPojo.getId()!=currentUser.getId()){
+            //若待更新的userPojo的id与session中的userPojo的id不一致
+            return ServerResponse.createByErrorMessage("更新失败：登录用户与更新用户不一致");
+        }
+        //调用service层更新用户
+        ServerResponse serverResponse=iUserService.updateUser(userPojo);
+        if(serverResponse.isSuccess()){
+            //更新成功 重新设置session中的UserPojo
+            session.setAttribute(Const.CURRENT_USER,serverResponse.getData());
+        }
+        //返回更新消息
+        return serverResponse;
     }
     //重置密码
     @RequestMapping(value="/reset_password",method= RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> resetPassword(String password,HttpSession session){
-        //todo
-        return null;
+        //获取session中的UserPojo的id
+        UserPojo userPojo= (UserPojo) session.getAttribute(Const.CURRENT_USER);
+        long id=userPojo.getId();
+        return iUserService.resetPassword(id,password);
     }
 }
