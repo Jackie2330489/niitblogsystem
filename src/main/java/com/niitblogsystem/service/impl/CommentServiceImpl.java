@@ -2,8 +2,10 @@ package com.niitblogsystem.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niitblogsystem.common.MessageType;
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.dao.CommentPojoMapper;
+import com.niitblogsystem.dao.MessagePojoMapper;
 import com.niitblogsystem.pojo.CommentPojo;
 import com.niitblogsystem.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class CommentServiceImpl implements ICommentService{
     @Autowired
     private CommentPojoMapper commentPojoMapper;
 
+    @Autowired
+    private MessagePojoMapper messagePojoMapper;
+
     ////评论模块
     //添加评论
     @Override
@@ -33,6 +38,8 @@ public class CommentServiceImpl implements ICommentService{
         //添加到数据库
         int resultColumn=commentPojoMapper.insertSelective(commentPojo);
         if(resultColumn>0){
+            //添加消息
+            messagePojoMapper.insertMessage(passive, MessageType.COMMENT.getCode(),0);
             return ServerResponse.createBySuccessMessage("添加成功");
         }
         return ServerResponse.createByErrorMessage("添加失败");
@@ -57,10 +64,11 @@ public class CommentServiceImpl implements ICommentService{
         pageInfo.setList(commentPojos);
         return ServerResponse.createBySuccess("获取成功",pageInfo);
     }
-
+    //查看用户评论
     @Override
     public ServerResponse<PageInfo> userComment(String active, int pageNum, int pageSize) {
         //使用降序
+        messagePojoMapper.readMessages(active,MessageType.COMMENT.getCode());
         PageHelper.startPage(pageNum,pageSize,"cretime desc");
         List<CommentPojo> commentPojos=commentPojoMapper.userComments(active);
         PageInfo pageInfo=new PageInfo(commentPojos);

@@ -40,8 +40,15 @@ public class LeavewordController {
     //查看留言墙
     @RequestMapping(value="/wall",method= RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> viewLeaveword(String username,int pageNum,int pageSize){
-        return iLeavewordService.wallLeaveword(username,pageNum,pageSize);
+    public ServerResponse<PageInfo> viewLeaveword(int pageNum,int pageSize,HttpSession session){
+        //验证登录状态
+        UserPojo userPojo= (UserPojo) session.getAttribute(Const.CURRENT_USER);
+        if(userPojo==null){
+            return ServerResponse.createByErrorMessage("请先登录");
+        }
+        //获取当前用户名
+        String active=userPojo.getUsername();
+        return iLeavewordService.wallLeaveword(active,pageNum,pageSize);
     }
     //删除留言
     @RequestMapping(value="/del",method= RequestMethod.POST)

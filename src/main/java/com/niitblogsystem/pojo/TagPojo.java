@@ -7,8 +7,6 @@ public class TagPojo {
 
     private String tagname;
 
-    private Integer posts;
-
     private Date cretime;
 
     public Long getId() {
@@ -25,14 +23,6 @@ public class TagPojo {
 
     public void setTagname(String tagname) {
         this.tagname = tagname == null ? null : tagname.trim();
-    }
-
-    public Integer getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Integer posts) {
-        this.posts = posts;
     }
 
     public Date getCretime() {

@@ -2,8 +2,10 @@ package com.niitblogsystem.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niitblogsystem.common.MessageType;
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.dao.LikePojoMapper;
+import com.niitblogsystem.dao.MessagePojoMapper;
 import com.niitblogsystem.pojo.LikePojo;
 import com.niitblogsystem.service.ILikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class LikeServiceImpl implements ILikeService{
     @Autowired
     private LikePojoMapper likePojoMapper;
 
+    @Autowired
+    private MessagePojoMapper messagePojoMapper;
+
     ////点赞模块
     //点赞
     @Override
@@ -34,6 +39,8 @@ public class LikeServiceImpl implements ILikeService{
         }
         int resultColumn=likePojoMapper.insertSelective(likePojo);
         if(resultColumn>0){
+            //添加消息
+            messagePojoMapper.insertMessage(passive, MessageType.LIKE.getCode(),0);
             return ServerResponse.createBySuccessMessage("点赞成功");
         }
         return ServerResponse.createByErrorMessage("点赞失败");
@@ -41,6 +48,7 @@ public class LikeServiceImpl implements ILikeService{
     //查看点赞
     @Override
     public ServerResponse<PageInfo> listLike(String username, int pageNum, int pageSize) {
+        messagePojoMapper.readMessages(username,MessageType.LIKE.getCode());
         PageHelper.startPage(pageNum,pageSize,"cretime desc");
         //收获点赞
         List<LikePojo> likePojos=likePojoMapper.selectList(username);

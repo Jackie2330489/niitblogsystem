@@ -2,8 +2,10 @@ package com.niitblogsystem.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niitblogsystem.common.MessageType;
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.dao.LeavewordPojoMapper;
+import com.niitblogsystem.dao.MessagePojoMapper;
 import com.niitblogsystem.pojo.LeavewordPojo;
 import com.niitblogsystem.service.ILeavewordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class LeavewordServiceImpl implements ILeavewordService{
     @Autowired
     private LeavewordPojoMapper leavewordPojoMapper;
 
+    @Autowired
+    private MessagePojoMapper messagePojoMapper;
+
     ////留言模块
     //添加留言
     @Override
@@ -32,13 +37,17 @@ public class LeavewordServiceImpl implements ILeavewordService{
         //添加
         int resultColumn=leavewordPojoMapper.insertSelective(leavewordPojo);
         if(resultColumn>0){
+            //添加消息
+            messagePojoMapper.insertMessage(passive, MessageType.LEAVEWORD.getCode(),0);
             return ServerResponse.createBySuccessMessage("添加成功");
         }
         return ServerResponse.createByErrorMessage("添加失败");
     }
-    //查看留言墙
+    //查看个人留言墙
     @Override
     public ServerResponse<PageInfo> wallLeaveword(String username, int pageNum, int pageSize) {
+        //消息已读
+        messagePojoMapper.readMessages(username,MessageType.LEAVEWORD.getCode());
         PageHelper.startPage(pageNum,pageSize,"cretime desc");
         List<LeavewordPojo> leavewordPojos=leavewordPojoMapper.selectList(username);
         PageInfo pageInfo=new PageInfo(leavewordPojos);

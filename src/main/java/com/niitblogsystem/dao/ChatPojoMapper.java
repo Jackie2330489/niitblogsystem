@@ -19,4 +19,6 @@ public interface ChatPojoMapper {
     int updateByPrimaryKey(ChatPojo record);
 
     List<ChatPojo> selectList(@Param("active") String active,@Param("passive") String passive);
+
+    List<ChatPojo> selectMyList(String active);
 }

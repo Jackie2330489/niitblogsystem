@@ -3,12 +3,13 @@
 <mapper namespace="com.niitblogsystem.dao.MessagePojoMapper" >
   <resultMap id="BaseResultMap" type="com.niitblogsystem.pojo.MessagePojo" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="msgtype" property="msgtype" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="cretime" property="cretime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, msgtype, status, cretime
+    id, username, msgtype, status, cretime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -21,9 +22,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.niitblogsystem.pojo.MessagePojo" >
-    insert into bsmessage (id, msgtype, status, 
+    insert into bsmessage (id, username,msgtype, status,
       cretime)
-    values (#{id,jdbcType=BIGINT}, #{msgtype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{msgtype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       now())
   </insert>
   <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.MessagePojo" >
@@ -31,6 +32,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="username != null" >
+        username,
       </if>
       <if test="msgtype != null" >
         msgtype,
@@ -46,6 +50,9 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
       <if test="msgtype != null" >
         #{msgtype,jdbcType=INTEGER},
       </if>
@@ -60,6 +67,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.niitblogsystem.pojo.MessagePojo" >
     update bsmessage
     <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
       <if test="msgtype != null" >
         msgtype = #{msgtype,jdbcType=INTEGER},
       </if>
@@ -74,9 +84,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.niitblogsystem.pojo.MessagePojo" >
     update bsmessage
-    set msgtype = #{msgtype,jdbcType=INTEGER},
+    set username= #{username,jdbcType=VARCHAR},
+      msgtype = #{msgtype,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       cretime = #{cretime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="readMessages" parameterType="map">
+    update bsmessage
+    set status=1
+    where username=#{username} and msgtype=#{msgType}
+  </update>
+  <insert id="insertMessage" parameterType="map">
+    insert into bsmessage(username,msgtype,status) values(#{username},#{msgType},#{status})
+  </insert>
 </mapper>

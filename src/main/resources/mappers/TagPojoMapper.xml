@@ -4,11 +4,10 @@
   <resultMap id="BaseResultMap" type="com.niitblogsystem.pojo.TagPojo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="tagname" property="tagname" jdbcType="VARCHAR" />
-    <result column="posts" property="posts" jdbcType="INTEGER" />
     <result column="cretime" property="cretime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, tagname, posts, cretime
+    id, tagname, cretime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -23,10 +22,9 @@
   <insert id="insert" parameterType="com.niitblogsystem.pojo.TagPojo" >
     insert into bstag (id, tagname, posts, 
       cretime)
-    values (#{id,jdbcType=BIGINT}, #{tagname,jdbcType=VARCHAR}, #{posts,jdbcType=INTEGER}, 
-      now())
+    values (#{id,jdbcType=BIGINT}, #{tagname,jdbcType=VARCHAR}, now())
   </insert>
-  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.TagPojo" >
+  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.TagPojo" keyProperty="id" useGeneratedKeys="true">
     insert into bstag
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -34,9 +32,6 @@
       </if>
       <if test="tagname != null" >
         tagname,
-      </if>
-      <if test="posts != null" >
-        posts,
       </if>
       <if test="cretime != null" >
         cretime,
@@ -49,9 +44,6 @@
       <if test="tagname != null" >
         #{tagname,jdbcType=VARCHAR},
       </if>
-      <if test="posts != null" >
-        #{posts,jdbcType=INTEGER},
-      </if>
       <if test="cretime != null" >
         now(),
       </if>
@@ -63,9 +55,6 @@
       <if test="tagname != null" >
         tagname = #{tagname,jdbcType=VARCHAR},
       </if>
-      <if test="posts != null" >
-        posts = #{posts,jdbcType=INTEGER},
-      </if>
       <if test="cretime != null" >
         cretime = #{cretime,jdbcType=TIMESTAMP},
       </if>
@@ -75,8 +64,18 @@
   <update id="updateByPrimaryKey" parameterType="com.niitblogsystem.pojo.TagPojo" >
     update bstag
     set tagname = #{tagname,jdbcType=VARCHAR},
-      posts = #{posts,jdbcType=INTEGER},
       cretime = #{cretime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByPostid" resultMap="BaseResultMap" parameterType="long">
+    select
+    bstag.id, tagname, cretime
+    from bstag,bstag2post where bstag2post.postid=#{postid} and bstag.id=bstag2post.tagid
+  </select>
+  <insert id="insertTag2Post" parameterType="map">
+    insert into bstag2post(postid,tagid) values(#{postid},#{tagid})
+  </insert>
+  <select id="selectId" resultType="int">
+    select id from bstag where tagname=#{tagname}
+  </select>
 </mapper>

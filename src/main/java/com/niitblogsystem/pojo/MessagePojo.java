@@ -5,6 +5,8 @@ import java.util.Date;
 public class MessagePojo {
     private Long id;
 
+    private String username;
+
     private Integer msgtype;
 
     private Integer status;
@@ -17,6 +19,14 @@ public class MessagePojo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getMsgtype() {

@@ -2,8 +2,10 @@ package com.niitblogsystem.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niitblogsystem.common.MessageType;
 import com.niitblogsystem.common.ServerResponse;
 import com.niitblogsystem.dao.FollowPojoMapper;
+import com.niitblogsystem.dao.MessagePojoMapper;
 import com.niitblogsystem.pojo.FollowPojo;
 import com.niitblogsystem.service.IFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class FollowServiceImpl implements IFollowService{
     @Autowired
     private FollowPojoMapper followPojoMapper;
 
+    ////关注模块
+    //关注
     @Override
     public ServerResponse<String> createFollow(String active, String passive) {
         //填充followpojo
@@ -32,7 +36,7 @@ public class FollowServiceImpl implements IFollowService{
         }
         return ServerResponse.createByErrorMessage("关注失败");
     }
-
+    //取消关注
     @Override
     public ServerResponse<String> delFollow(String active, String passive) {
         int resultColumn=followPojoMapper.deleteByActivePassive(active,passive);
@@ -41,7 +45,7 @@ public class FollowServiceImpl implements IFollowService{
         }
         return ServerResponse.createByErrorMessage("删除失败");
     }
-
+    //获取关注列表
     @Override
     public ServerResponse<PageInfo> listFollow(String username,int pageNum,int pageSize) {
         PageHelper.startPage(pageNum,pageSize,"cretime desc");

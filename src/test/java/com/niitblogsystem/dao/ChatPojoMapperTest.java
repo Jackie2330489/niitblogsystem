@@ -24,7 +24,7 @@ public class ChatPojoMapperTest {
 
     @Test
     public void selectList() throws Exception {
-        List<ChatPojo> pojos=chatPojoMapper.selectList("Banana","Apple");
+        List<ChatPojo> pojos=chatPojoMapper.selectMyList("Banana");
         for(ChatPojo chatPojo:pojos){
             System.out.println(chatPojo.getPassive()+" to "+chatPojo.getActive()+":"+chatPojo.getMsg());
         }

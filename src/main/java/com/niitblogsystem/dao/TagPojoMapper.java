@@ -1,6 +1,9 @@
 package com.niitblogsystem.dao;
 
 import com.niitblogsystem.pojo.TagPojo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TagPojoMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,10 @@ public interface TagPojoMapper {
     int updateByPrimaryKeySelective(TagPojo record);
 
     int updateByPrimaryKey(TagPojo record);
+
+    int insertTag2Post(@Param("postid") long postid,@Param("tagid") long tagid);
+
+    Integer selectId(String tagname);
+
+    List<TagPojo> selectByPostid(long postid);
 }

@@ -43,8 +43,8 @@ INSERT INTO bslike(active,passive,postid) VALUES
 ('Banana','Apple',1);
 #添加标签
 INSERT INTO bstag(tagname,posts) VALUES
-('Good Apples',6),
-('No Apples',3);
+('Good Apples'),
+('No Apples');
 #添加标签博文关系
 INSERT INTO bstag2post(postid,tagid) VALUES
 (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,2),(8,2),(9,2);
@@ -53,7 +53,8 @@ INSERT INTO bsfollow(active,passive) VALUES
 ('Banana','Apple'),
 ('Cat','Apple');
 #添加消息
-INSERT INTO bsmessage(msgtype,status) VALUES
-(1,0),(1,1),(2,0),(2,1),(3,0),(3,1),(4,0),(4,1);
+INSERT INTO bsmessage(username,msgtype,status) VALUES
+('Banana',1,0),('Banana',1,1),('Banana',2,0),
+('Apple',2,1),('Apple',3,0),('Apple',3,1),('Apple',4,0),('Apple',4,1);
 #添加敏感信息
 INSERT INTO bssensitive(word) VALUES ('fuck'),('妈的');
