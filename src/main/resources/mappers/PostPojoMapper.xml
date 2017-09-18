@@ -32,7 +32,7 @@
       #{body,jdbcType=VARCHAR}, now(), now(),
       #{status,jdbcType=INTEGER}, #{readtimes,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.PostPojo" >
+  <insert id="insertSelective" parameterType="com.niitblogsystem.pojo.PostPojo" keyProperty="id" useGeneratedKeys="true">
     insert into bspost
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -125,4 +125,19 @@
       readtimes = #{readtimes,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <delete id="deleteByIdAndAuthor" parameterType="map">
+    delete from bspost
+    where author=#{author} and id=#{postid}
+  </delete>
+  <update id="updatePostStatus" parameterType="map">
+    update bspost
+    set status=#{status}
+    where author=#{username} and id=#{id}
+  </update>
+  <select id="selectPostList" resultMap="BaseResultMap" parameterType="string">
+    select
+    id, author, title, cretime, updtime, status, readtimes
+    from bspost
+    where author=#{author}
+  </select>
 </mapper>

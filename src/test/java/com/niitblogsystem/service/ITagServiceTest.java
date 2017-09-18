@@ -25,11 +25,7 @@ public class ITagServiceTest {
 
     @Test
     public void handleTags() throws Exception {
-        List<String> tags=new ArrayList<>();
-        tags.add("Hello");
-        tags.add("papillion");
-        int i=iTagService.handleTags(1L,tags);
-        System.out.println(i);
+
     }
 
 }

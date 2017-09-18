@@ -18,7 +18,7 @@ public class TagServiceImpl implements ITagService {
     private TagPojoMapper tagPojoMapper;
 
     @Override
-    public int handleTags(long postid, List<String> tags) {
+    public int handleTags(long postid, String[] tags) {
         //受影响行数
         int lines=0;
         for(String tag:tags){
